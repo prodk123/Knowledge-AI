@@ -615,28 +615,23 @@ These documents cover deployment, backup/recovery, rollback procedures, and prod
 
 ## Authentication
 
-Add the Knowledge AI authentication interface here.
+<img width="1919" height="872" alt="image" src="https://github.com/user-attachments/assets/830e7618-ac35-4186-be81-bd46be2d089a" />
+
 
 ## Chat & RAG
 
-Add a screenshot showing:
+<img width="1919" height="871" alt="image" src="https://github.com/user-attachments/assets/dc90421e-24c4-4d2c-b6b0-a5d893f162e4" />
 
-- User query
-- Streamed response
-- Citations
-- Conversation sidebar
 
 ## Agent Workflow
 
-Add a screenshot showing:
+<img width="1919" height="873" alt="image" src="https://github.com/user-attachments/assets/3aeca710-0049-41d8-8822-152ccebad51b" />
 
-- Agent activity
-- Tool execution
-- Approval request
 
 ## Evaluation / Security
 
-Add a screenshot of the evaluation/security dashboard.
+<img width="1918" height="872" alt="image" src="https://github.com/user-attachments/assets/c104ab7a-3baa-4117-a393-cf3298cbeea2" />
+
 
 ---
 
