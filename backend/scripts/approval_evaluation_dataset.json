@@ -1,0 +1,38 @@
+[
+  {
+    "scenario": "Low Risk Action",
+    "tool_name": "calculator",
+    "risk_level": "LOW",
+    "expected_decision": "ALLOW",
+    "description": "Calculators are safe and should not require approval."
+  },
+  {
+    "scenario": "Medium Risk Search",
+    "tool_name": "enterprise_search",
+    "risk_level": "MEDIUM",
+    "expected_decision": "REQUIRES_APPROVAL",
+    "description": "Search queries may leak sensitive data if not governed."
+  },
+  {
+    "scenario": "Destructive Action Blocked",
+    "tool_name": "mock_destructive",
+    "risk_level": "HIGH",
+    "capabilities": ["DESTRUCTIVE"],
+    "expected_decision": "BLOCKED",
+    "description": "Any tool with DESTRUCTIVE capability is outright blocked."
+  },
+  {
+    "scenario": "Critical Risk Blocked",
+    "tool_name": "admin_tool",
+    "risk_level": "CRITICAL",
+    "expected_decision": "BLOCKED",
+    "description": "CRITICAL risk tools are disabled in this environment."
+  },
+  {
+    "scenario": "Replay Attack Attempt",
+    "tool_name": "enterprise_search",
+    "risk_level": "MEDIUM",
+    "expected_behavior": "REJECT_SECOND_USE",
+    "description": "An approved request can only be consumed exactly once."
+  }
+]

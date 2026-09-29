@@ -1,0 +1,40 @@
+# Web framework
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+python-multipart==0.0.20
+
+# Configuration
+pydantic-settings==2.9.1
+python-dotenv==1.1.0
+
+# Database
+sqlalchemy[asyncio]==2.0.41
+asyncpg==0.30.0
+alembic==1.13.1
+
+# Vector database
+qdrant-client==1.14.2
+
+# LLM (OpenAI-compatible client for OpenRouter)
+openai==1.82.0
+
+# Document parsing (lightweight — no ML models needed)
+pymupdf==1.25.5
+python-docx==1.1.2
+
+# Testing
+pytest==8.4.0
+pytest-asyncio==1.0.0
+httpx==0.28.1
+rank_bm25==0.2.2
+flashrank==0.2.8
+nltk==3.8.1
+
+# Security and Authentication
+passlib[bcrypt]==1.7.4
+python-jose[cryptography]==3.3.0
+email-validator>=2.0.0
+arq>=0.25.0
+redis>=5.0.0
+beautifulsoup4==4.12.3
+nest_asyncio==1.6.0

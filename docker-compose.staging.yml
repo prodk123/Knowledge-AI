@@ -1,0 +1,199 @@
+version: '3.8'
+
+# =============================================================================
+# Enterprise RAG \u2014 Staging Compose
+#
+# Production-like configuration with isolated staging resources.
+# All secrets MUST be provided via .env.staging (never hardcoded here).
+#
+# Usage:
+#   cp .env.staging.example .env.staging
+#   # Edit .env.staging with real staging values
+#   docker compose -f docker-compose.staging.yml --env-file .env.staging up -d
+# =============================================================================
+
+services:
+  # --- Reverse Proxy (Edge Router) ---
+  nginx:
+    image: nginx:alpine
+    container_name: rag-staging-nginx
+    ports:
+      - "8080:80"          # Staging on port 8080 to avoid clash with production port 80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+    networks:
+      - staging_public
+
+  # --- Frontend Application ---
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_API_URL=/api
+    container_name: rag-staging-frontend
+    expose:
+      - "3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=/api
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - staging_public
+
+  # --- Backend API ---
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: rag-staging-backend
+    expose:
+      - "8000"
+    environment:
+      - APP_ENV=staging
+      - APP_NAME=enterprise-rag-staging
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - QDRANT_URL=http://rag-staging-qdrant:6333
+      - QDRANT_COLLECTION=${QDRANT_COLLECTION:-enterprise_documents_staging}
+      - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:8080}
+      - LLM_BASE_URL=${LLM_BASE_URL}
+      - LLM_API_KEY=${LLM_API_KEY}
+      - LLM_MODEL=${LLM_MODEL}
+      - EMBEDDING_PROVIDER=${EMBEDDING_PROVIDER}
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL}
+      - EMBEDDING_DIMENSION=${EMBEDDING_DIMENSION:-2048}
+      - UPLOAD_DIR=data/uploads
+      - EMAIL_PROVIDER_MODE=sandbox
+      - WEB_PROVIDER=sandbox
+      - CALENDAR_PROVIDER_MODE=sandbox
+    volumes:
+      - staging_uploads:/app/data/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - staging_public
+      - staging_internal
+
+  # --- Background Worker (ARQ) ---
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: rag-staging-worker
+    command: ["arq", "app.worker.WorkerSettings"]
+    environment:
+      - APP_ENV=staging
+      - SECRET_KEY=${SECRET_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDIS_URL=${REDIS_URL}
+      - QDRANT_URL=http://rag-staging-qdrant:6333
+      - QDRANT_COLLECTION=${QDRANT_COLLECTION:-enterprise_documents_staging}
+      - LLM_BASE_URL=${LLM_BASE_URL}
+      - LLM_API_KEY=${LLM_API_KEY}
+      - LLM_MODEL=${LLM_MODEL}
+      - EMBEDDING_PROVIDER=${EMBEDDING_PROVIDER}
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL}
+      - EMBEDDING_DIMENSION=${EMBEDDING_DIMENSION:-2048}
+      - UPLOAD_DIR=data/uploads
+      - EMAIL_PROVIDER_MODE=sandbox
+      - WEB_PROVIDER=sandbox
+      - CALENDAR_PROVIDER_MODE=sandbox
+    volumes:
+      - staging_uploads:/app/data/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - staging_internal
+      - staging_public
+
+  # --- PostgreSQL (isolated staging database) ---
+  postgres:
+    image: postgres:16-alpine
+    container_name: rag-staging-postgres
+    expose:
+      - "5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - staging_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-rag_staging}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - staging_internal
+
+  # --- Qdrant (isolated staging collection namespace via volume) ---
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: rag-staging-qdrant
+    expose:
+      - "6333"
+      - "6334"
+    volumes:
+      - staging_qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/localhost/6333'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - staging_internal
+
+  # --- Redis (isolated staging instance) ---
+  redis:
+    image: redis:7-alpine
+    container_name: rag-staging-redis
+    expose:
+      - "6379"
+    volumes:
+      - staging_redis_data:/data
+    command: redis-server --save 60 1 --loglevel warning
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - staging_internal
+
+networks:
+  staging_public:
+    driver: bridge
+  staging_internal:
+    driver: bridge
+    internal: true   # Databases cannot reach the internet
+
+volumes:
+  staging_postgres_data:
+  staging_qdrant_data:
+  staging_redis_data:
+  staging_uploads:

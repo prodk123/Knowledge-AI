@@ -1,0 +1,24 @@
+[
+  {"message": "Hi, what can you do?", "expected_route": "direct"},
+  {"message": "How are you?", "expected_route": "direct"},
+  {"message": "Explain what an LLM is.", "expected_route": "direct"},
+  {"message": "What is Python?", "expected_route": "direct"},
+  {"message": "Write a short poem about coding.", "expected_route": "direct"},
+  {"message": "What is our annual leave policy?", "expected_route": "rag"},
+  {"message": "How much can employees claim for travel?", "expected_route": "rag"},
+  {"message": "According to the employee handbook, how many sick days are available?", "expected_route": "rag"},
+  {"message": "What are the finance approval limits?", "expected_route": "rag"},
+  {"message": "What is the marketing budget?", "expected_route": "rag"},
+  {
+    "conversation": [{"role": "user", "content": "What is our parental leave policy?"}],
+    "message": "How long is it?",
+    "expected_route": "rag"
+  },
+  {
+    "conversation": [{"role": "user", "content": "What is 20% of 500?"}, {"role": "assistant", "content": "100"}],
+    "message": "Thanks!",
+    "expected_route": "direct"
+  },
+  {"message": "What is your role?", "expected_route": "direct"},
+  {"message": "What is our company?", "expected_route": "rag"}
+]

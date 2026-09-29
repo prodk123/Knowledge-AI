@@ -1,0 +1,82 @@
+[
+  {
+    "case_id": "cost_01",
+    "name": "Cheap Greeting",
+    "category": "cost_direct",
+    "input": "Hi",
+    "expected_route": "direct",
+    "expected_max_cost": 0.001
+  },
+  {
+    "case_id": "cost_02",
+    "name": "Standard RAG",
+    "category": "cost_rag",
+    "input": "What is the vacation policy?",
+    "expected_route": "rag",
+    "expected_max_cost": 0.05
+  },
+  {
+    "case_id": "cost_03",
+    "name": "Simple Agent",
+    "category": "cost_agent",
+    "input": "Search for the weather in Paris.",
+    "expected_route": "agent_single",
+    "expected_max_cost": 0.10
+  },
+  {
+    "case_id": "cost_04",
+    "name": "Complex Swarm",
+    "category": "cost_swarm",
+    "input": "Write a highly detailed 5 page research report on quantum computing by finding recent papers online and comparing them to our internal quantum computing research.",
+    "expected_route": "agent_swarm",
+    "expected_max_cost": 0.50
+  },
+  {
+    "case_id": "cost_05",
+    "name": "Out of domain",
+    "category": "cost_direct",
+    "input": "Can you jump?",
+    "expected_route": "direct",
+    "expected_max_cost": 0.001
+  },
+  {
+    "case_id": "cost_06",
+    "name": "Agent with Math",
+    "category": "cost_agent",
+    "input": "Calculate 99283 * 23992",
+    "expected_route": "agent_single",
+    "expected_max_cost": 0.10
+  },
+  {
+    "case_id": "cost_07",
+    "name": "Swarm heavy synthesis",
+    "category": "cost_swarm",
+    "input": "Synthesize the entire internal HR manual into a 1 page summary and cross-reference with US labor laws online.",
+    "expected_route": "agent_swarm",
+    "expected_max_cost": 0.50
+  },
+  {
+    "case_id": "cost_08",
+    "name": "Simple RAG again",
+    "category": "cost_rag",
+    "input": "Where is the kitchen?",
+    "expected_route": "rag",
+    "expected_max_cost": 0.05
+  },
+  {
+    "case_id": "cost_09",
+    "name": "Costly loop trap",
+    "category": "cost_agent",
+    "input": "Find a list of 1000 employees online and email all of them.",
+    "expected_route": "agent_single",
+    "expected_max_cost": 0.50
+  },
+  {
+    "case_id": "cost_10",
+    "name": "Tiny swarm",
+    "category": "cost_swarm",
+    "input": "Search internal DB for 'Project X' and web for 'Project X' and summarize.",
+    "expected_route": "agent_swarm",
+    "expected_max_cost": 0.20
+  }
+]

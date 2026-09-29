@@ -1,0 +1,53 @@
+# Enterprise RAG
+.env
+.env.staging
+.env.production
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads and processed data
+data/uploads/*
+data/processed/*
+!data/uploads/.gitkeep
+!data/processed/.gitkeep
+
+# Docker
+*.log
+logs/
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# SQLite temp / generated artifacts
+*.db
+*.sqlite
+*.sqlite3
+backend_logs.txt
+backend_openapi.json
+staging_db_backup.dump
+logs.txt
+models.json
+STAGE_11_FINAL_QA_AND_ACCEPTANCE_REPORT.md

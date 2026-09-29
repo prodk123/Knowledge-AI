@@ -1,0 +1,52 @@
+[
+  {
+    "scenario": "cycle_creation",
+    "description": "A -> B -> A",
+    "plan": {
+      "goal": "Test",
+      "steps": [
+        {"step_id": "A", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["B"], "arguments": {}},
+        {"step_id": "B", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["A"], "arguments": {}}
+      ],
+      "reasoning_summary": "",
+      "completion_condition": ""
+    },
+    "expected_error": "Plan dependency graph contains cycles."
+  },
+  {
+    "scenario": "depth_exhaustion",
+    "description": "Chain of 11 steps",
+    "plan": {
+      "goal": "Test",
+      "steps": [
+        {"step_id": "s1", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": [], "arguments": {}},
+        {"step_id": "s2", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["s1"], "arguments": {}},
+        {"step_id": "s3", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["s2"], "arguments": {}},
+        {"step_id": "s4", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["s3"], "arguments": {}},
+        {"step_id": "s5", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["s4"], "arguments": {}},
+        {"step_id": "s6", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["s5"], "arguments": {}},
+        {"step_id": "s7", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["s6"], "arguments": {}},
+        {"step_id": "s8", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["s7"], "arguments": {}},
+        {"step_id": "s9", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["s8"], "arguments": {}},
+        {"step_id": "s10", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["s9"], "arguments": {}},
+        {"step_id": "s11", "action_type": "SYNTHESIZE", "purpose": "Test", "dependencies": ["s10"], "arguments": {}}
+      ],
+      "reasoning_summary": "",
+      "completion_condition": ""
+    },
+    "expected_error": "exceeds max steps (10)"
+  },
+  {
+    "scenario": "unknown_tool",
+    "description": "Request invalid tool",
+    "plan": {
+      "goal": "Test",
+      "steps": [
+        {"step_id": "s1", "action_type": "TOOL_CALL", "tool_name": "hack_system", "purpose": "Test", "dependencies": [], "arguments": {}}
+      ],
+      "reasoning_summary": "",
+      "completion_condition": ""
+    },
+    "expected_error": "unknown tool"
+  }
+]

@@ -1,0 +1,24 @@
+[
+  {
+    "scenario": "simple_direct",
+    "description": "Greeting without tools",
+    "task": "Hi, how are you?",
+    "expected_steps": 1,
+    "expected_action": "SYNTHESIZE"
+  },
+  {
+    "scenario": "single_tool",
+    "description": "Calculate 125 * 24",
+    "task": "Calculate 125 * 24",
+    "expected_steps": 2,
+    "expected_action": "TOOL_CALL",
+    "expected_tool": "calculator"
+  },
+  {
+    "scenario": "two_tool_workflow",
+    "description": "Search documents and email Rahul",
+    "task": "Find the company's Q3 revenue and email the answer to Rahul.",
+    "expected_steps": 3,
+    "expected_action": "WAITING_FOR_APPROVAL"
+  }
+]

@@ -1,0 +1,82 @@
+[
+    {
+        "question": "What is the annual leave policy?",
+        "relevant_documents": ["employee_handbook.md"]
+    },
+    {
+        "question": "How many sick days do I get?",
+        "relevant_documents": ["employee_handbook.md"]
+    },
+    {
+        "question": "Can I work remotely?",
+        "relevant_documents": ["employee_handbook.md"]
+    },
+    {
+        "question": "What is the maximum travel reimbursement per day?",
+        "relevant_documents": ["finance_policy.md"]
+    },
+    {
+        "question": "What flights are allowed for travel?",
+        "relevant_documents": ["finance_policy.md"]
+    },
+    {
+        "question": "When are expense reports due?",
+        "relevant_documents": ["finance_policy.md"]
+    },
+    {
+        "question": "Who founded the company?",
+        "relevant_documents": ["company_overview.md"]
+    },
+    {
+        "question": "What is the company mission statement?",
+        "relevant_documents": ["company_overview.md"]
+    },
+    {
+        "question": "Where is the headquarters located?",
+        "relevant_documents": ["company_overview.md"]
+    },
+    {
+        "question": "What is the social media posting policy?",
+        "relevant_documents": ["marketing_policy.md"]
+    },
+    {
+        "question": "Can I use the company logo on personal projects?",
+        "relevant_documents": ["marketing_policy.md"]
+    },
+    {
+        "question": "How should press releases be approved?",
+        "relevant_documents": ["marketing_policy.md"]
+    },
+    {
+        "question": "What are the core working hours for remote work?",
+        "relevant_documents": ["employee_handbook.md"]
+    },
+    {
+        "question": "Is alcohol expensable?",
+        "relevant_documents": ["finance_policy.md"]
+    },
+    {
+        "question": "How do I request time off?",
+        "relevant_documents": ["employee_handbook.md"]
+    },
+    {
+        "question": "What is the employee matching program?",
+        "relevant_documents": ["employee_handbook.md", "finance_policy.md"]
+    },
+    {
+        "question": "What are the brand colors?",
+        "relevant_documents": ["marketing_policy.md"]
+    },
+    {
+        "question": "What year was the company established?",
+        "relevant_documents": ["company_overview.md"]
+    },
+    {
+        "question": "Do I need a receipt for a $20 meal?",
+        "relevant_documents": ["finance_policy.md"]
+    },
+    {
+        "question": "What is the official tone of voice for the brand?",
+        "relevant_documents": ["marketing_policy.md"]
+    }
+]

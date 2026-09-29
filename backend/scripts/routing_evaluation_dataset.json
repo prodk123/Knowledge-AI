@@ -1,0 +1,77 @@
+[
+  {
+    "case_id": "route_01",
+    "name": "Direct Greeting",
+    "category": "direct",
+    "input": "Hello, how are you?",
+    "expected_route": "direct"
+  },
+  {
+    "case_id": "route_02",
+    "name": "Basic Policy Question",
+    "category": "rag",
+    "input": "What is the remote work policy?",
+    "expected_route": "rag"
+  },
+  {
+    "case_id": "route_03",
+    "name": "Single Agent Request",
+    "category": "agent_single",
+    "input": "Can you summarize the top 3 tech news articles today?",
+    "expected_route": "agent_single",
+    "expected_agents": ["research_agent"]
+  },
+  {
+    "case_id": "route_04",
+    "name": "Multi Agent Synthesis",
+    "category": "agent_swarm",
+    "input": "Compare our Q1 revenue (from internal docs) with our competitor's Q1 revenue (from the web) and calculate the percentage difference.",
+    "expected_route": "agent_swarm",
+    "expected_agents": ["rag_agent", "research_agent", "analysis_agent", "synthesis_agent"]
+  },
+  {
+    "case_id": "route_05",
+    "name": "RAG definition",
+    "category": "rag",
+    "input": "How do I setup the VPN?",
+    "expected_route": "rag"
+  },
+  {
+    "case_id": "route_06",
+    "name": "Math calculation",
+    "category": "agent_single",
+    "input": "What is 2532 * 3920 / 4?",
+    "expected_route": "agent_single",
+    "expected_agents": ["analysis_agent"]
+  },
+  {
+    "case_id": "route_07",
+    "name": "Out of domain direct",
+    "category": "direct",
+    "input": "Translate 'apple' to Spanish.",
+    "expected_route": "direct"
+  },
+  {
+    "case_id": "route_08",
+    "name": "Swarm research synthesis",
+    "category": "agent_swarm",
+    "input": "Search for the latest AI trends in 2026 and summarize them along with a cost-benefit analysis for our company using internal budget docs.",
+    "expected_route": "agent_swarm",
+    "expected_agents": ["research_agent", "rag_agent", "synthesis_agent"]
+  },
+  {
+    "case_id": "route_09",
+    "name": "Internal DB lookup",
+    "category": "rag",
+    "input": "Who is the CEO of our company?",
+    "expected_route": "rag"
+  },
+  {
+    "case_id": "route_10",
+    "name": "Web search only",
+    "category": "agent_single",
+    "input": "What is the weather in Tokyo right now?",
+    "expected_route": "agent_single",
+    "expected_agents": ["research_agent"]
+  }
+]
